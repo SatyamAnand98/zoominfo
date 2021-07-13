@@ -30,21 +30,24 @@ server.bind(`localhost:${PORT}`, grpc.ServerCredentials.createInsecure());
 console.log(`Welcome, the server is running on port ${PORT}`);
 server.start();
 
-function GetByFileName(call, callback){
+function getByFileName(call, callback){
+	console.log('printed from server side')
+	console.log(call.request)
+	console.log(callback)
 
   const md = call.metadata.getMap();
     for (let key in md) {
         console.log(key, md[key]);
     }
   
-  const fileName = call.request.fileName;
+  // const fileName = call.request.fileName;
 
-    for (let i = 0; i < dms.length; i++) {
-        if (dms[i].fileName === fileName) {
-            callback(null, {file: dms[i]});
-            return;
-        }
-    }
+  //   for (let i = 0; i < dms.length; i++) {
+  //       if (dms[i].fileName === fileName) {
+  //           callback(null, {file: dms[i]});
+  //           return;
+  //       }
+  //   }
 
   callback('error');
 }
@@ -60,7 +63,7 @@ function GetByFolderName(call, callback){
 
     for (let i = 0; i < dms.length; i++) {
         if (dms[i].folderName === folderName) {
-            callback(null, {folder: dms[i]});
+            callback(null, {folderName: dms[i]});
             return;
         }
     }
@@ -88,7 +91,7 @@ function saveFile(call, callback){
 function saveFolder(call, callback){
     call.on('data', function (dms) {
       dms.push(dms.folderName);
-      call.write({employee: dms.folderName});
+      call.write({folderName: dms.folderName});
   });
   call.on('end', function () {
       dms.forEach(function (dms) {

@@ -15,11 +15,9 @@ const packageDefinition = loader.loadSync('message.proto', {
 const pkg = grpc.loadPackageDefinition(packageDefinition);
 
 const PORT = 9000;
-console.log(PORT)
 const client = new pkg.CreateResource(`localhost:${PORT}`, grpc.credentials.createInsecure());
 
 const option = parseInt(process.argv[2],11);
-console.log(option)
 
 switch (option) {
     case 1:
@@ -85,22 +83,21 @@ function saveFolder(client) {
 }
 
 function getByFileName(client) {
-    console.log(client)
-    client.GetByFileName({fileName: "file1"}, function (err, response) {
+    client.getByFileName({fileName: "file4"}, function (err, response) {
         if (err) {
             console.log(err);
         } else {
-            console.log(response.dms);
+            console.log(response.File);
         }
     });
 }
 
 function getByFolderName(client) {
-    client.GetByFolderName({folderName: "folder1"}, function (err, response) {
+    client.getByFolderName({folderName: "folder1"}, function (err, response) {
         if (err) {
             console.log(err);
         } else {
-            console.log(response.dms);
+            console.log(response.File);
         }
     });
 }
