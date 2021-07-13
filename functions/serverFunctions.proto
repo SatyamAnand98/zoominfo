@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+syntax = "proto3";
+
+package serverFunctions;
+
+service Greeter{
+	rpc SayHello(HelloRequest) returns (HelloReply){}
+}
+
+
+service EchoService{
+	rpc EchoUnary (EchoMessage) returns (EchoMessage);
+	rpc EchoClientStream (stream EchoMessage) returns (EchoMessage);
+	rpc EchoServerStream (EchoMessage) returns (stream EchoMessage);
+	rpc EchoBidiStream (stream EchoMessage) returns (stream EchoMessage);
+}
+
+message EchoMessage{
+	string value=1;
+}
+
+
+message HelloRequest{
+	string name = 1;
+}
+
+message HelloReply{
+	string message = 1;
+}
