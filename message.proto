@@ -10,29 +10,40 @@ message File {
   string content = 5;
 }
 
-message GetAllRequest {}
-
-message GetByBadgeNumberRequest {
-  int32 badgeNumber = 1;
+message GetByFileName {
+  File fileName = 1;
 }
 
-message FileRequest {
-  Employee employee = 1;
+message FileResponse{
+	File fileName = 1;
 }
-message FileResponse {
-  Employee employee = 1;
+
+message GetByFolderName {
+  File folderName = 1;
 }
-message FileRequest {
-  bytes data = 1;
+
+message FolderResponse{
+	File folderName = 1;
 }
-message FileResponse {
-  bool isOk = 1;
+
+message SaveFileRequest {
+  File fileName = 1;
 }
+message SaveFileResponse {
+  File fileName = 1;
+}
+
+message SaveFolderRequest {
+  File folderName = 1;
+}
+message SaveFolderResponse {
+  File folderName = 1;
+}
+
 
 service CreateResource {
-  rpc GetByBadgeNumber (GetByBadgeNumberRequest) returns (EmployeeResponse);
-  rpc GetAll (GetAllRequest) returns (stream EmployeeResponse);
-  rpc Save (EmployeeRequest) returns (EmployeeResponse);
-  rpc SaveAll (stream EmployeeRequest) returns (stream EmployeeResponse);
-  rpc AddPhoto (stream AddPhotoRequest) returns (AddPhotoResponse);
+  rpc GetByFileName (GetByFileName) returns (FileResponse);
+  rpc GetByFolderName (GetByFolderName) returns (stream FileResponse);
+  rpc SaveFileRequest (SaveFileRequest) returns (stream SaveFileResponse);
+  rpc SaveFolderResponse (SaveFolderRequest) returns (stream SaveFolderResponse);
 }

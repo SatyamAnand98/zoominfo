@@ -30,7 +30,7 @@ server.bind(`localhost:${PORT}`, grpc.ServerCredentials.createInsecure());
 console.log(`Welcome, the server is running on port ${PORT}`);
 server.start();
 
-function getByFileName(call, callback){
+function GetByFileName(call, callback){
 
   const md = call.metadata.getMap();
     for (let key in md) {
@@ -49,7 +49,7 @@ function getByFileName(call, callback){
   callback('error');
 }
 
-function getByFolderName(call, callback){
+function GetByFolderName(call, callback){
 
   const md = call.metadata.getMap();
     for (let key in md) {
@@ -86,13 +86,13 @@ function saveFile(call, callback){
 }
 
 function saveFolder(call, callback){
-    call.on('data', function (emp) {
-      dms.push(emp.employee);
-      call.write({employee: emp.employee});
+    call.on('data', function (dms) {
+      dms.push(dms.folderName);
+      call.write({employee: dms.folderName});
   });
   call.on('end', function () {
-      dms.forEach(function (emp) {
-          console.log(emp);
+      dms.forEach(function (dms) {
+          console.log(dms);
       });
       call.end();
   });

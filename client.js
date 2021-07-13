@@ -23,32 +23,27 @@ console.log(option)
 
 switch (option) {
     case 1:
-        sendMetadata(client);
+        getByFileName(client);
         break;
     case 2:
-        getByBadgeNumber(client);
+        getByFolderName(client);
         break;
     case 3:
-        getAll(client);
+        saveFile(client);
         break;
     case 4:
-        addPhoto(client);
-        break;
-    case 5:
-        saveAll(client);
+        saveFolder(client);
         break;
 }
 
 function saveFile(client) {
-    const employees = [
+    const dms = [
         {
-			badgeNumber: 123,
 			folderName: "folder1",
 			fileName: "file1",
             content:"hello this is test1"
 		},
 		{
-			badgeNumber: 234,
 			folderName: "folde2",
 			fileName: "file2",
             content: "hello this is test2"
@@ -56,54 +51,56 @@ function saveFile(client) {
     ];
 
     const call = client.saveFile();
-    call.on('data', function (emp) {
-        console.log(emp.employee);
+    call.on('data', function (dms) {
+        console.log(dms.file);
     });
-    employees.forEach(function (emp) {
-        call.write({employee: emp});
+    dms.forEach(function (dms) {
+        call.write({dms: dms});
     });
     call.end();
 }
 
-function addPhoto(client) {
-    const md = new grpc.Metadata();
-    md.add('badgenumber', '2080');
+function saveFolder(client) {
+    const dms = [
+        {
+            folderName: "folder6",
+            fileName: "file6",
+            content:"hello this is test6"
+        },
+        {
+            folderName: "folder7",
+            fileName: "file7",
+            content: "hello this is test7"
+        }
+    ];
 
-    const call = client.addPhoto(md, function (err, result) {
-        console.log(result);
+    const call = client.saveFile();
+    call.on('data', function (dms) {
+        console.log(dms.file);
     });
-
-    const stream = fs.createReadStream('Penguins.jpg');
-    stream.on('data', function (chunk) {
-        call.write({data: chunk});
+    dms.forEach(function (dms) {
+        call.write({dms: dms});
     });
-    stream.on('end', function () {
-        call.end();
-    });
+    call.end();
 }
 
-function getAll(client) {
-    const call = client.getAll({});
-
-    call.on('data', function (data) {
-        console.log(data.employee);
-    });
-}
-
-function sendMetadata(client) {
-    const md = new grpc.Metadata();
-    md.add('username', 'mvansickle');
-    md.add('password', 'password1');
-
-    client.getByBadgeNumber({}, md, function () {});
-}
-
-function getByBadgeNumber(client) {
-    client.getByBadgeNumber({badgeNumber: 2080}, function (err, response) {
+function getByFileName(client) {
+    console.log(client)
+    client.GetByFileName({fileName: "file1"}, function (err, response) {
         if (err) {
             console.log(err);
         } else {
-            console.log(response.employee);
+            console.log(response.dms);
+        }
+    });
+}
+
+function getByFolderName(client) {
+    client.GetByFolderName({folderName: "folder1"}, function (err, response) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(response.dms);
         }
     });
 }
