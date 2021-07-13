@@ -35,10 +35,10 @@ function getByFileName(call, callback){
 	console.log(call.request)
 	console.log(callback)
 
-  const md = call.metadata.getMap();
-    for (let key in md) {
-        console.log(key, md[key]);
-    }
+  // const md = call.metadata.getMap();
+  //   for (let key in md) {
+  //       console.log(key, md[key]);
+  //   }
   
   // const fileName = call.request.fileName;
 
@@ -49,7 +49,7 @@ function getByFileName(call, callback){
   //       }
   //   }
 
-  callback('error');
+  // callback('error');
 }
 
 function GetByFolderName(call, callback){

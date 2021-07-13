@@ -42,7 +42,9 @@ message SaveFolderResponse {
 
 
 service CreateResource {
-  rpc GetByFileName (GetByFileName) returns (FileResponse);
+  rpc GetByFileName (GetByFileName) returns (FileResponse){
+  	option (google.api.http) = { get: "/getbyfilename/{fileName}" };
+  };
   rpc GetByFolderName (GetByFolderName) returns (stream FileResponse);
   rpc SaveFileRequest (SaveFileRequest) returns (stream SaveFileResponse);
   rpc SaveFolderResponse (SaveFolderRequest) returns (stream SaveFolderResponse);
