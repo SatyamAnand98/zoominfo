@@ -14,35 +14,34 @@ const packageDefinition = loader.loadSync('message.proto', {
 
 const pkg = grpc.loadPackageDefinition(packageDefinition);
 
-const employees = require('./DMS').DMS;
+const dms = require('./DMS').DMS;
 
 const PORT = 9000;
 const server = new grpc.Server();
 
 server.addService(pkg.CreateResource.service, {
-  getByBadgeNumber: getByBadgeNumber,
-  getAll: getAll,
-  addPhoto: addPhoto,
-  saveAll: saveAll,
-  save: save
+  getByFileName: getByFileName,
+  getByFolderName: getByFolderName,
+  saveFile: saveFile,
+  saveFolder: saveFolder
 });
 
 server.bind(`localhost:${PORT}`, grpc.ServerCredentials.createInsecure());
 console.log(`Welcome, the server is running on port ${PORT}`);
 server.start();
 
-function getByBadgeNumber(call, callback){
+function getByFileName(call, callback){
 
   const md = call.metadata.getMap();
     for (let key in md) {
         console.log(key, md[key]);
     }
   
-  const badgeNumber = call.request.badgeNumber;
+  const fileName = call.request.fileName;
 
-    for (let i = 0; i < employees.length; i++) {
-        if (employees[i].badgeNumber === badgeNumber) {
-            callback(null, {employee: employees[i]});
+    for (let i = 0; i < dms.length; i++) {
+        if (dms[i].fileName === fileName) {
+            callback(null, {file: dms[i]});
             return;
         }
     }
@@ -50,15 +49,26 @@ function getByBadgeNumber(call, callback){
   callback('error');
 }
 
-function getAll(call){
-  employees.forEach(function(emp) {
-    call.write({employee: emp});
-});
+function getByFolderName(call, callback){
 
-call.end();
+  const md = call.metadata.getMap();
+    for (let key in md) {
+        console.log(key, md[key]);
+    }
+  
+  const folderName = call.request.folderName;
+
+    for (let i = 0; i < dms.length; i++) {
+        if (dms[i].folderName === folderName) {
+            callback(null, {folder: dms[i]});
+            return;
+        }
+    }
+
+  callback('error');
 }
 
-function addPhoto(call, callback){
+function saveFile(call, callback){
   const md = call.metadata.getMap();
     for (let key in md) {
         console.log(key, md[key]);
@@ -75,13 +85,13 @@ function addPhoto(call, callback){
     })
 }
 
-function saveAll(call, callback){
+function saveFolder(call, callback){
     call.on('data', function (emp) {
-      employees.push(emp.employee);
+      dms.push(emp.employee);
       call.write({employee: emp.employee});
   });
   call.on('end', function () {
-      employees.forEach(function (emp) {
+      dms.forEach(function (emp) {
           console.log(emp);
       });
       call.end();

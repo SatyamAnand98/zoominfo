@@ -1,27 +1,21 @@
 const DMS = [
     {
 		id: 1,
-		badgeNumber: 2080,
-		firstName: "Coke",
-		lastName: "Orellana",
-		vacationAccrualRate: 2,
-		vacationAccrued: 30,
+		folderName: "folder3",
+		fileName: "file3",
+		content: "hello test 3",
 	},
     {
 		id: 2,
-		badgeNumber: 7538,
-		firstName: "Jorge",
-		lastName: "Orellana",
-		vacationAccrualRate: 2.3,
-		vacationAccrued: 23.4,
+		folderName: "folder4",
+		fileName: "file4",
+		content: "hello test 4",
 	},
     {
 		id: 3,
-		badgeNumber: 5144,
-		firstName: "Julianne",
-		lastName: "Lyne",
-		vacationAccrualRate: 3,
-		vacationAccrued: 31.7,
+		folderName: "folder5",
+		fileName: "file5",
+		content: "hello test 5"
 	}
 ];
 

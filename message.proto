@@ -3,13 +3,11 @@ syntax = "proto3";
 option go_package = "grpcdemo/pb";
 option csharp_namespace = "Messages";
 
-message Employee {
+message File {
   int32 id = 1;
-  int32 badgeNumber = 2;
-  string firstName = 3;
-  string lastName = 4;
-  float vacationAccrualRate = 5;
-  float vacationAccrued = 6;
+  string folderName = 3;
+  string fileName = 4;
+  string content = 5;
 }
 
 message GetAllRequest {}
@@ -17,16 +15,17 @@ message GetAllRequest {}
 message GetByBadgeNumberRequest {
   int32 badgeNumber = 1;
 }
-message EmployeeRequest {
+
+message FileRequest {
   Employee employee = 1;
 }
-message EmployeeResponse {
+message FileResponse {
   Employee employee = 1;
 }
-message AddPhotoRequest {
+message FileRequest {
   bytes data = 1;
 }
-message AddPhotoResponse {
+message FileResponse {
   bool isOk = 1;
 }
 

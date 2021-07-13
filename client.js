@@ -39,25 +39,23 @@ switch (option) {
         break;
 }
 
-function saveAll(client) {
+function saveFile(client) {
     const employees = [
         {
 			badgeNumber: 123,
-			firstName: "John",
-			lastName: "Smith",
-			vacationAccrualRate: 1.2,
-			vacationAccrued: 0,
+			folderName: "folder1",
+			fileName: "file1",
+            content:"hello this is test1"
 		},
 		{
 			badgeNumber: 234,
-			firstName: "Lisa",
-			lastName: "Wu",
-			vacationAccrualRate: 1.7,
-			vacationAccrued: 10,
+			folderName: "folde2",
+			fileName: "file2",
+            content: "hello this is test2"
 		}
     ];
 
-    const call = client.saveAll();
+    const call = client.saveFile();
     call.on('data', function (emp) {
         console.log(emp.employee);
     });
